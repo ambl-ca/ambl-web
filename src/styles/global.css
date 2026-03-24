@@ -15,7 +15,7 @@
   }
 
   h1 {
-    @apply text-6xl sm:text-7xl font-medium leading-snug text-primary;
+    @apply text-6xl sm:text-7xl font-medium leading-snug text-primary tracking-tighter;
   }
 
   h2 {
