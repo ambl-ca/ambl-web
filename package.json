@@ -6,16 +6,23 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "astro": "astro",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "astro dev",
+    "format": "prettier --write .",
+    "lint": "oxlint --config .oxlintrc.json",
+    "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/ts-plugin": "^1.10.7",
-    "astro": "^6.0.8"
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.0.8",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
+    "oxlint": "^1.57.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.2"
   }
 }
