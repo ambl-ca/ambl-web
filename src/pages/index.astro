@@ -1,15 +1,141 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
 ---
 
 <Layout title="Ambl Web">
-  <div class="flex flex-col items-center md:flex-row">
-    <div class="pr-8 md:flex-1 md:py-12 xl:flex-2">
-      <h1 class="pb-4 leading-none">Renovate your digital home</h1>
-      <h2 class="text-xl font-normal md:text-2xl">
-        It's time to upgrade your website. We're here to help you, neighbour.
-      </h2>
-    </div>
-    <div class="md:flex-1 xl:flex-3"></div>
+  <div class="max-w-3xl md:py-12">
+    <h1 class="pb-4 leading-none">Renovate your digital home</h1>
+    <h2 class="text-xl font-normal md:text-2xl">
+      It's time to upgrade your website. We're here to help you, neighbour.
+    </h2>
+    <button
+      id="open-contact-modal"
+      type="button"
+      class="bg-primary mt-6 inline-flex items-center rounded-lg px-4 py-2 font-medium text-white hover:opacity-90"
+      aria-haspopup="dialog"
+      aria-controls="contact-modal"
+    >
+      Contact us
+    </button>
   </div>
+
+  <dialog
+    id="contact-modal"
+    aria-labelledby="contact-form-title"
+    class="m-auto w-[min(42rem,calc(100%-2rem))] max-h-[90vh] overflow-y-auto rounded-2xl border border-primary/20 bg-white p-6 opacity-0 shadow-2xl transition-opacity duration-300 open:opacity-100 backdrop:bg-black/45 backdrop:backdrop-blur-sm sm:p-8"
+  >
+    <ContactForm />
+    <button
+      id="close-contact-modal"
+      type="button"
+      class="text-primary/80 hover:text-primary absolute top-4 right-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary/20"
+      aria-label="Close contact form"
+    >
+      <span aria-hidden="true" class="text-3xl leading-none">&#215;</span>
+    </button>
+  </dialog>
 </Layout>
+
+<script>
+  const openButton = document.getElementById('open-contact-modal');
+  const closeButton = document.getElementById('close-contact-modal');
+  const modal = document.getElementById('contact-modal');
+  let lastFocusedElement: HTMLElement | null = null;
+
+  const getFocusableElements = (): HTMLElement[] => {
+    if (!(modal instanceof HTMLDialogElement)) {
+      return [];
+    }
+
+    const elements = modal.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+
+    return Array.from(elements).filter((element): element is HTMLElement => !element.hasAttribute('hidden'));
+  };
+
+  const getFirstInputElement = (): HTMLElement | null => {
+    if (!(modal instanceof HTMLDialogElement)) {
+      return null;
+    }
+
+    return modal.querySelector<HTMLElement>(
+      'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled])'
+    );
+  };
+
+  const trapModalFocus = (event: KeyboardEvent) => {
+    if (!(modal instanceof HTMLDialogElement) || !modal.open || event.key !== 'Tab') {
+      return;
+    }
+
+    const focusableElements = getFocusableElements();
+    if (focusableElements.length === 0) {
+      event.preventDefault();
+      return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    const activeElement = document.activeElement;
+
+    if (event.shiftKey && activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+      return;
+    }
+
+    if (!event.shiftKey && activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  };
+
+  const openModal = () => {
+    if (!(modal instanceof HTMLDialogElement)) {
+      return;
+    }
+
+    lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    modal.showModal();
+    document.body.classList.add('overflow-hidden');
+
+    window.requestAnimationFrame(() => {
+      const firstInput = getFirstInputElement();
+      if (firstInput) {
+        firstInput.focus();
+        return;
+      }
+
+      getFocusableElements()[0]?.focus();
+    });
+  };
+
+  const closeModal = () => {
+    if (!(modal instanceof HTMLDialogElement) || !modal.open) {
+      return;
+    }
+
+    modal.close();
+    document.body.classList.remove('overflow-hidden');
+  };
+
+  openButton?.addEventListener('click', openModal);
+  closeButton?.addEventListener('click', closeModal);
+
+  modal?.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  modal?.addEventListener('keydown', trapModalFocus);
+
+  modal?.addEventListener('close', () => {
+    document.body.classList.remove('overflow-hidden');
+    if (lastFocusedElement instanceof HTMLElement) {
+      lastFocusedElement.focus();
+    }
+  });
+</script>

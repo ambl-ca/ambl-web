@@ -32,14 +32,28 @@ To learn more about the folder structure of an Astro project, refer to [our guid
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
+| Command                | Action                                           |
+| :--------------------- | :----------------------------------------------- |
+| `pnpm install`         | Installs dependencies                            |
 | `pnpm dev`             | Starts local dev server at `localhost:4321`      |
 | `pnpm build`           | Build your production site to `./dist/`          |
 | `pnpm preview`         | Preview your build locally, before deploying     |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
+
+## Contact form env vars
+
+Set these in local `.env` and your Cloudflare deployment settings:
+
+```bash
+RESEND_API_KEY=re_xxx
+RESEND_FROM_EMAIL=info@ambl.ca
+RESEND_FROM_NAME=Ambl Contact Form
+LOG_LEVEL=info
+```
+
+Contact form submissions are sent to `RESEND_FROM_EMAIL`, `ben@ambl.ca`, and `rachel@ambl.ca`.
+Logs are pretty-printed during `pnpm dev` and output as structured JSON in non-dev environments.
 
 ## 👀 Want to learn more?
 

@@ -1,0 +1,123 @@
+<section>
+  <h3 id="contact-form-title" class="text-2xl">Contact us</h3>
+  <form id="contact-form" class="mt-6 space-y-4" method="post" action="/api/contact">
+    <label class="block">
+      <span class="text-primary mb-1 block font-medium">Name</span>
+      <input
+        name="name"
+        type="text"
+        required
+        maxlength="120"
+        class="border-primary/30 ring-primary/30 w-full rounded-lg border bg-white px-3 py-2 outline-none focus:ring"
+      />
+    </label>
+
+    <fieldset class="block">
+      <legend class="text-primary mb-2 block font-medium">Do you currently have a website?</legend>
+      <div class="flex items-center gap-6">
+        <label class="inline-flex items-center gap-2">
+          <input
+            type="radio"
+            name="hasWebsite"
+            value="yes"
+            required
+            class="accent-primary h-4 w-4"
+          />
+          <span>Yes</span>
+        </label>
+        <label class="inline-flex items-center gap-2">
+          <input type="radio" name="hasWebsite" value="no" required class="accent-primary h-4 w-4" />
+          <span>No</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <label class="block">
+      <span class="text-primary mb-1 block font-medium">Company name</span>
+      <input
+        name="companyName"
+        type="text"
+        required
+        maxlength="120"
+        class="border-primary/30 ring-primary/30 w-full rounded-lg border bg-white px-3 py-2 outline-none focus:ring"
+      />
+    </label>
+
+    <label class="block">
+      <span class="text-primary mb-1 block font-medium">Any questions for us? (optional)</span>
+      <textarea
+        name="questions"
+        maxlength="5000"
+        rows="6"
+        class="border-primary/30 ring-primary/30 w-full rounded-lg border bg-white px-3 py-2 outline-none focus:ring"
+      ></textarea>
+    </label>
+
+    <input name="websiteUrl" type="text" tabindex="-1" autocomplete="off" class="hidden" />
+    <button
+      id="contact-submit"
+      type="submit"
+      class="bg-primary inline-flex items-center rounded-lg px-4 py-2 font-medium text-white hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      Send message
+    </button>
+    <p id="contact-status" class="text-sm" aria-live="polite"></p>
+  </form>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const submitButton = document.getElementById('contact-submit');
+  const status = document.getElementById('contact-status');
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement)) {
+      return;
+    }
+
+    const formData = new FormData(form);
+
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+    }
+    if (status) {
+      status.textContent = 'Sending...';
+      status.className = 'text-sm text-secondary';
+    }
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: formData,
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (response.ok && result.ok) {
+        form.reset();
+        if (status) {
+          status.textContent = 'Thanks, your message has been sent.';
+          status.className = 'text-sm text-primary';
+        }
+        return;
+      }
+
+      if (status) {
+        status.textContent =
+          typeof result.error === 'string'
+            ? result.error
+            : 'Unable to send your message right now.';
+        status.className = 'text-sm text-red-700';
+      }
+    } catch {
+      if (status) {
+        status.textContent = 'Unable to send your message right now.';
+        status.className = 'text-sm text-red-700';
+      }
+    } finally {
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+      }
+    }
+  });
+</script>
