@@ -56,8 +56,7 @@ export const POST: APIRoute = async ({ request }) => {
     const resendApiKey = import.meta.env.RESEND_API_KEY;
     const fromEmail = import.meta.env.RESEND_FROM_EMAIL ?? 'info@ambl.ca';
     const fromName = import.meta.env.RESEND_FROM_NAME ?? 'Ambl Contact Form';
-    const toEmails = ['ben@ambl.ca']
-    // const toEmails = [fromEmail, 'ben@ambl.ca', 'rachel@ambl.ca'];
+    const toEmails = [fromEmail, 'ben@ambl.ca', 'rachel@ambl.ca'];
 
     if (!resendApiKey) {
       log.error({ event: 'contact.resend_key_missing' }, 'Missing Resend API key');
