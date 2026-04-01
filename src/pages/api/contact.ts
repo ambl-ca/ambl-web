@@ -88,8 +88,7 @@ function getContactEmailConfig(): ContactEmailConfig | null {
     apiKey,
     fromEmail,
     fromName: import.meta.env.RESEND_FROM_NAME ?? 'Ambl Contact Form',
-    // toEmails: [fromEmail, 'ben@ambl.ca', 'rachel@ambl.ca'],
-    toEmails: ['ben@ambl.ca']
+    toEmails: [fromEmail, 'ben@ambl.ca', 'rachel@ambl.ca'],
   };
 }
 
