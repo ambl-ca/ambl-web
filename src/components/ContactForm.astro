@@ -8,26 +8,28 @@
         type="text"
         required
         maxlength="120"
-        class="border-primary/30 ring-primary/30 w-full rounded-lg border bg-white px-3 py-2 outline-none focus:ring"
+        class="border-primary/25 ring-primary/30 focus:border-primary/40 focus-visible:outline-primary w-full rounded-xl border bg-white/90 px-3 py-2 shadow-sm transition outline-none focus:ring focus-visible:outline-2 focus-visible:outline-offset-2"
       />
     </label>
 
     <fieldset class="block">
       <legend class="text-primary mb-2 block font-medium">Do you currently have a website?</legend>
-      <div class="flex items-center gap-6">
-        <label class="inline-flex items-center gap-2">
-          <input
-            type="radio"
-            name="hasWebsite"
-            value="yes"
-            required
-            class="accent-primary h-4 w-4"
-          />
-          <span>Yes</span>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <label class="block cursor-pointer">
+          <input type="radio" name="hasWebsite" value="yes" required class="peer sr-only" />
+          <span
+            class="border-primary/25 text-secondary peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary peer-focus-visible:ring-primary/40 peer-focus-visible:outline-primary flex w-full items-center justify-center rounded-xl border bg-white/90 px-3 py-2 font-medium shadow-sm transition peer-focus-visible:ring peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2"
+          >
+            Yes
+          </span>
         </label>
-        <label class="inline-flex items-center gap-2">
-          <input type="radio" name="hasWebsite" value="no" required class="accent-primary h-4 w-4" />
-          <span>No</span>
+        <label class="block cursor-pointer">
+          <input type="radio" name="hasWebsite" value="no" required class="peer sr-only" />
+          <span
+            class="border-primary/25 text-secondary peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary peer-focus-visible:ring-primary/40 peer-focus-visible:outline-primary flex w-full items-center justify-center rounded-xl border bg-white/90 px-3 py-2 font-medium shadow-sm transition peer-focus-visible:ring peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2"
+          >
+            No
+          </span>
         </label>
       </div>
     </fieldset>
@@ -39,7 +41,7 @@
         type="text"
         required
         maxlength="120"
-        class="border-primary/30 ring-primary/30 w-full rounded-lg border bg-white px-3 py-2 outline-none focus:ring"
+        class="border-primary/25 ring-primary/30 focus:border-primary/40 focus-visible:outline-primary w-full rounded-xl border bg-white/90 px-3 py-2 shadow-sm transition outline-none focus:ring focus-visible:outline-2 focus-visible:outline-offset-2"
       />
     </label>
 
@@ -49,7 +51,7 @@
         name="questions"
         maxlength="5000"
         rows="6"
-        class="border-primary/30 ring-primary/30 w-full rounded-lg border bg-white px-3 py-2 outline-none focus:ring"
+        class="border-primary/25 ring-primary/30 focus:border-primary/40 focus-visible:outline-primary w-full rounded-xl border bg-white/90 px-3 py-2 shadow-sm transition outline-none focus:ring focus-visible:outline-2 focus-visible:outline-offset-2"
       ></textarea>
     </label>
 
@@ -57,11 +59,23 @@
     <button
       id="contact-submit"
       type="submit"
-      class="bg-primary inline-flex items-center rounded-lg px-4 py-2 font-medium text-white hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+      class="group bg-primary ring-primary/40 focus-visible:outline-primary inline-flex items-center gap-2 rounded-xl px-4 py-2 font-medium text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:hover:translate-y-0"
     >
-      Send message
+      <span>Send message</span>
+      <span
+        aria-hidden="true"
+        class="text-accent text-base leading-none transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none"
+      >
+        →
+      </span>
     </button>
-    <p id="contact-status" class="text-sm" aria-live="polite"></p>
+    <p id="contact-status" class="text-sm" aria-live="polite">
+      <span
+        id="contact-status-icon"
+        class="hidden h-5 w-5 items-center justify-center rounded-full text-xs font-semibold"
+      ></span>
+      <span id="contact-status-text"></span>
+    </p>
   </form>
 </section>
 
@@ -69,6 +83,39 @@
   const form = document.getElementById('contact-form');
   const submitButton = document.getElementById('contact-submit');
   const status = document.getElementById('contact-status');
+  const statusIcon = document.getElementById('contact-status-icon');
+  const statusText = document.getElementById('contact-status-text');
+
+  const setStatus = (message: string, type: 'loading' | 'success' | 'error') => {
+    if (!status || !statusText || !statusIcon) {
+      return;
+    }
+
+    statusText.textContent = message;
+
+    if (type === 'loading') {
+      status.className =
+        'inline-flex items-center gap-2 rounded-full px-2 py-1 text-sm text-secondary';
+      statusIcon.className = 'hidden';
+      statusIcon.textContent = '';
+      return;
+    }
+
+    if (type === 'success') {
+      status.className =
+        'inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-2 py-1 text-sm text-primary';
+      statusIcon.className =
+        'inline-flex h-5 w-5 items-center justify-center rounded-full bg-accent/80 text-primary text-xs font-semibold';
+      statusIcon.textContent = '✓';
+      return;
+    }
+
+    status.className =
+      'inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-2 py-1 text-sm text-red-700';
+    statusIcon.className =
+      'inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-100 text-xs font-semibold';
+    statusIcon.textContent = '!';
+  };
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -81,10 +128,7 @@
     if (submitButton instanceof HTMLButtonElement) {
       submitButton.disabled = true;
     }
-    if (status) {
-      status.textContent = 'Sending...';
-      status.className = 'text-sm text-secondary';
-    }
+    setStatus('Sending...', 'loading');
 
     try {
       const response = await fetch('/api/contact', {
@@ -95,25 +139,16 @@
 
       if (response.ok && result.ok) {
         form.reset();
-        if (status) {
-          status.textContent = 'Thanks, your message has been sent.';
-          status.className = 'text-sm text-primary';
-        }
+        setStatus('Thanks, your message has been sent.', 'success');
         return;
       }
 
-      if (status) {
-        status.textContent =
-          typeof result.error === 'string'
-            ? result.error
-            : 'Unable to send your message right now.';
-        status.className = 'text-sm text-red-700';
-      }
+      setStatus(
+        typeof result.error === 'string' ? result.error : 'Unable to send your message right now.',
+        'error'
+      );
     } catch {
-      if (status) {
-        status.textContent = 'Unable to send your message right now.';
-        status.className = 'text-sm text-red-700';
-      }
+      setStatus('Unable to send your message right now.', 'error');
     } finally {
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.disabled = false;

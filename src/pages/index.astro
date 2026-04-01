@@ -23,13 +23,20 @@ import ContactForm from '../components/ContactForm.astro';
   <dialog
     id="contact-modal"
     aria-labelledby="contact-form-title"
-    class="m-auto w-[min(42rem,calc(100%-2rem))] max-h-[90vh] overflow-y-auto rounded-2xl border border-primary/20 bg-white p-6 opacity-0 shadow-2xl transition-opacity duration-300 open:opacity-100 backdrop:bg-black/45 backdrop:backdrop-blur-sm sm:p-8"
+    class="relative m-auto w-[min(42rem,calc(100%-2rem))] max-h-[90vh] overflow-y-auto rounded-2xl border border-primary/20 bg-white p-6 opacity-0 shadow-2xl translate-y-2 scale-[0.98] transition-[opacity,transform] duration-300 open:opacity-100 open:translate-y-0 open:scale-100 motion-reduce:translate-y-0 motion-reduce:scale-100 backdrop:bg-black/45 backdrop:backdrop-blur-sm sm:p-8"
   >
-    <ContactForm />
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+      <div class="absolute -top-12 -right-10 h-44 w-44 rounded-full bg-accent/25 blur-2xl"></div>
+      <div class="absolute -bottom-12 -left-8 h-40 w-40 rounded-full bg-primary/12 blur-2xl"></div>
+    </div>
+
+    <div class="relative z-10">
+      <ContactForm />
+    </div>
     <button
       id="close-contact-modal"
       type="button"
-      class="text-primary/80 hover:text-primary absolute top-4 right-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary/20"
+      class="text-primary/80 hover:text-primary absolute top-4 right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-white/90"
       aria-label="Close contact form"
     >
       <span aria-hidden="true" class="text-3xl leading-none">&#215;</span>
