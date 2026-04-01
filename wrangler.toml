@@ -1,3 +1,9 @@
 name = "ambl-web"
 compatibility_date = "2026-03-17"
 compatibility_flags = ["nodejs_compat"]
+
+[observability]
+enabled = true
+
+[vars]
+LOG_LEVEL = "info"
