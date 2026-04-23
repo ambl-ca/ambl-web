@@ -2,11 +2,23 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #215e48;
-  --color-secondary: #4C5E57;
-  --color-accent: #7f9b6d;
-  --color-background: #f0f5e1;
-  --color-text: #000000;
+  --color-primary: #215E48;
+  --color-secondary: #E2ECCF;
+  --color-background: #F9FBF5;
+  --color-text: #181717;
+
+  --color-poppy-800: #C13333;
+  --color-iris-800: #1C697D;
+
+  --color-tree-800: #215E48;
+  --color-tree-500: #C9DAA4;
+  --color-tree-300: #DFE9C9;
+  --color-tree-100: #FDFEFB;
+   
+  --color-sun-800: #A7592C;
+  --color-sun-500: #E4B59A;
+  --color-sun-300: #EED3C3;
+
 }
 
 @layer base {
@@ -16,15 +28,15 @@
   }
 
   h1 {
-    @apply text-6xl sm:text-7xl font-medium leading-snug text-primary tracking-tighter;
+    @apply text-5xl sm:text-6xl text-primary tracking-tighter;
   }
 
   h2 {
-    @apply text-3xl sm:text-4xl font-medium leading-tight text-secondary;
+    @apply text-3xl sm:text-4xl font-medium;
   }
 
   h3 {
-    @apply text-2xl sm:text-3xl font-semibold leading-snug text-primary;
+    @apply text-2xl sm:text-3xl font-semibold text-primary;
   }
 
   h4 {
@@ -37,5 +49,17 @@
 
   h6 {
     @apply text-base font-semibold text-primary;
+  }
+
+  p {
+    @apply text-base leading-snug;
+  }
+
+  input, textarea {
+    @apply border-primary/25 ring-primary/30 focus:border-primary/40 focus-visible:outline-primary w-full rounded-sm border bg-white/90 px-3 py-2 shadow-sm transition outline-none focus:ring focus-visible:outline-2 focus-visible:outline-offset-2;
+  }
+
+  button {
+    @apply bg-primary ring-primary/40 focus-visible:outline-primary inline-flex items-center gap-2 rounded-sm px-4 py-2 text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:hover:translate-y-0
   }
 }

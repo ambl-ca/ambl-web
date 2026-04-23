@@ -3,146 +3,97 @@ import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
 ---
 
-<Layout title="Ambl Web">
-  <div class="max-w-3xl md:py-12">
-    <h1 class="pb-4 leading-none">Renovate your digital home</h1>
-    <h2 class="text-xl font-normal md:text-2xl">
-      It's time to upgrade your website. We're here to help you, neighbour.
-    </h2>
-    <button
-      id="open-contact-modal"
-      type="button"
-      class="bg-primary mt-6 inline-flex items-center rounded-lg px-4 py-2 font-medium text-white hover:opacity-90"
-      aria-haspopup="dialog"
-      aria-controls="contact-modal"
-    >
-      Contact us
-    </button>
+<Layout title="Ambl Landing Page - ambl.ca">
+  <div class="px-6 sm:px-8 lg:px-80">
+    <section id="hero" class="flex w-full flex-col items-center py-8">
+      <h1 class="flex w-fit flex-col pb-4 leading-none">
+        <span class="w-fit">Build your</span>
+        <span class="w-fit pl-16">digital home.</span>
+      </h1>
+      <img
+        class="w-full max-w-2xl pr-4"
+        src="/assets/ambl-graphic.svg"
+        alt="Laptop with house and garden illustration"
+      />
+    </section>
+    <section id="main" class="space-y-22 py-14">
+      <div class="px-4">
+        <div class="py-4">
+          <img src="/assets/hands-graphic.svg" alt="Handshake illustration with flower design" />
+        </div>
+        <h2 class="pb-6">
+          We started <span class="text-tree-800">Ambl</span> to help our <span
+            class="text-poppy-800">neighbours</span
+          >
+          <span class="text-tree-800">grow</span> their <span class="text-iris-800">online</span>
+          <span class="text-sun-800">presence</span>.
+        </h2>
+        <p class="pr-28 text-lg">
+          Ambl develops your business' reach through digital marketing using websites and social
+          media.
+        </p>
+      </div>
+      <div class="flex flex-col gap-5 sm:flex-row">
+        <div id="websites-card" class="bg-tree-500 flex flex-1 flex-col rounded-xl p-3 pr-12">
+          <div class="bg-tree-300 h-full space-y-4 rounded-lg p-4 py-6">
+            <h2 class="text-tree-800">Websites</h2>
+            <p>Websites that are friendly for your customers, phones, and search engines.</p>
+            <img class="w-full flex-1" src="/assets/websites-graphic.svg" alt="" />
+          </div>
+        </div>
+        <div id="websites-card" class="bg-sun-500 flex-1 rounded-xl p-3 pr-12">
+          <div class="bg-sun-300 space-y-4 rounded-lg p-4 py-6">
+            <h2 class="text-sun-800">Social Media</h2>
+            <p>
+              Consistent posts and engaging videos that build your customer base and sell for you.
+            </p>
+            <img class="px-8" src="/assets/social-media-graphic.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <dialog
-    id="contact-modal"
-    aria-labelledby="contact-form-title"
-    class="relative m-auto w-[min(42rem,calc(100%-2rem))] max-h-[90vh] overflow-y-auto rounded-2xl border border-primary/20 bg-white p-6 opacity-0 shadow-2xl translate-y-2 scale-[0.98] transition-[opacity,transform] duration-300 open:opacity-100 open:translate-y-0 open:scale-100 motion-reduce:translate-y-0 motion-reduce:scale-100 backdrop:bg-black/45 backdrop:backdrop-blur-sm sm:p-8"
-  >
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
-      <div class="absolute -top-12 -right-10 h-44 w-44 rounded-full bg-accent/25 blur-2xl"></div>
-      <div class="absolute -bottom-12 -left-8 h-40 w-40 rounded-full bg-primary/12 blur-2xl"></div>
+  <section id="contact" class="bg-tree-100 flex flex-col gap-14 px-6 py-14 sm:px-16 md:flex-row">
+    <div class="flex-2 space-y-8">
+      <h2>Get in touch</h2>
+      <div class="space-y-3">
+        <p>
+          Interested? Curious? We want to connect! Use the form on the right to directly get in
+          touch with us. We’re here to help.
+        </p>
+        <p class="text-tree-800 text-sm">
+          *By submitting this form, I consent to the collection and use of my personal information
+          to respond to my inquiry, as described in the <a
+            href="/privacy-policy"
+            class="font-medium underline">Privacy Policy</a
+          >.
+        </p>
+      </div>
+
+      <div class="stroke-tree-800 flex gap-3">
+        <a href="https://www.instagram.com/ambl_ca/"
+          ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+            ><!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE -->
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path
+                d="M16 11.37A4 4 0 1 1 12.63 8A4 4 0 0 1 16 11.37m1.5-4.87h.01"></path></g
+            ></svg
+          >
+        </a>
+        <a href="https://www.linkedin.com/company/ambl-ca/"
+          ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+            ><!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE -->
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              ><path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2a2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6M2 9h4v12H2z"
+              ></path><circle cx="4" cy="4" r="2"></circle></g
+            ></svg
+          ></a
+        >
+      </div>
     </div>
 
-    <div class="relative z-10">
-      <ContactForm />
-    </div>
-    <button
-      id="close-contact-modal"
-      type="button"
-      class="text-primary/80 hover:text-primary absolute top-4 right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-white/90"
-      aria-label="Close contact form"
-    >
-      <span aria-hidden="true" class="text-3xl leading-none">&#215;</span>
-    </button>
-  </dialog>
+    <ContactForm />
+  </section>
 </Layout>
-
-<script>
-  const openButton = document.getElementById('open-contact-modal');
-  const closeButton = document.getElementById('close-contact-modal');
-  const modal = document.getElementById('contact-modal');
-  let lastFocusedElement: HTMLElement | null = null;
-
-  const getFocusableElements = (): HTMLElement[] => {
-    if (!(modal instanceof HTMLDialogElement)) {
-      return [];
-    }
-
-    const elements = modal.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    );
-
-    return Array.from(elements).filter((element): element is HTMLElement => !element.hasAttribute('hidden'));
-  };
-
-  const getFirstInputElement = (): HTMLElement | null => {
-    if (!(modal instanceof HTMLDialogElement)) {
-      return null;
-    }
-
-    return modal.querySelector<HTMLElement>(
-      'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled])'
-    );
-  };
-
-  const trapModalFocus = (event: KeyboardEvent) => {
-    if (!(modal instanceof HTMLDialogElement) || !modal.open || event.key !== 'Tab') {
-      return;
-    }
-
-    const focusableElements = getFocusableElements();
-    if (focusableElements.length === 0) {
-      event.preventDefault();
-      return;
-    }
-
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-    const activeElement = document.activeElement;
-
-    if (event.shiftKey && activeElement === firstElement) {
-      event.preventDefault();
-      lastElement.focus();
-      return;
-    }
-
-    if (!event.shiftKey && activeElement === lastElement) {
-      event.preventDefault();
-      firstElement.focus();
-    }
-  };
-
-  const openModal = () => {
-    if (!(modal instanceof HTMLDialogElement)) {
-      return;
-    }
-
-    lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    modal.showModal();
-    document.body.classList.add('overflow-hidden');
-
-    window.requestAnimationFrame(() => {
-      const firstInput = getFirstInputElement();
-      if (firstInput) {
-        firstInput.focus();
-        return;
-      }
-
-      getFocusableElements()[0]?.focus();
-    });
-  };
-
-  const closeModal = () => {
-    if (!(modal instanceof HTMLDialogElement) || !modal.open) {
-      return;
-    }
-
-    modal.close();
-    document.body.classList.remove('overflow-hidden');
-  };
-
-  openButton?.addEventListener('click', openModal);
-  closeButton?.addEventListener('click', closeModal);
-
-  modal?.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      closeModal();
-    }
-  });
-
-  modal?.addEventListener('keydown', trapModalFocus);
-
-  modal?.addEventListener('close', () => {
-    document.body.classList.remove('overflow-hidden');
-    if (lastFocusedElement instanceof HTMLElement) {
-      lastFocusedElement.focus();
-    }
-  });
-</script>
