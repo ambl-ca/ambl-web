@@ -5,10 +5,12 @@ import { z } from 'zod';
 export const prerender = false;
 
 const contactSchema = z.object({
-  name: z.string().trim().min(2).max(120),
+  firstName: z.string().trim().min(2).max(120),
+  lastName: z.string().trim().min(2).max(120),
+  email: z.email(),
   hasWebsite: z.enum(['yes', 'no']),
   companyName: z.string().trim().min(2).max(120),
-  questions: z.string().trim().max(5000).optional().default(''),
+  message: z.string().trim().max(5000).optional().default(''),
   websiteUrl: z.string().trim().max(120).optional().default(''),
 });
 
@@ -18,7 +20,7 @@ type ContactEmailConfig = {
   apiKey: string;
   fromEmail: string;
   fromName: string;
-  toEmails: string[];
+  toEmail: string;
 };
 
 export const POST: APIRoute = async ({ request }) => {
@@ -59,10 +61,12 @@ function json(payload: Record<string, unknown>, status: number): Response {
 async function parseContactPayload(request: Request): Promise<ContactPayload | null> {
   const formData = await request.formData();
   const parsed = contactSchema.safeParse({
-    name: String(formData.get('name') ?? ''),
+    firstName: String(formData.get('firstName') ?? ''),
+    lastName: String(formData.get('lastName') ?? ''),
+    email: String(formData.get('email') ?? ''),
     hasWebsite: String(formData.get('hasWebsite') ?? ''),
     companyName: String(formData.get('companyName') ?? ''),
-    questions: String(formData.get('questions') ?? ''),
+    message: String(formData.get('questions') ?? ''),
     websiteUrl: String(formData.get('websiteUrl') ?? ''),
   });
 
@@ -84,11 +88,13 @@ function getContactEmailConfig(): ContactEmailConfig | null {
   }
 
   const fromEmail = import.meta.env.RESEND_FROM_EMAIL ?? 'info@ambl.ca';
+  const fromName = import.meta.env.RESEND_FROM_EMAIL ?? 'info@ambl.ca';
+
   return {
     apiKey,
     fromEmail,
-    fromName: import.meta.env.RESEND_FROM_NAME ?? 'Ambl Contact Form',
-    toEmails: [fromEmail, 'ben@ambl.ca', 'rachel@ambl.ca'],
+    fromName,
+    toEmail: fromEmail,
   };
 }
 
@@ -100,8 +106,8 @@ async function sendContactEmail(
     const resend = new Resend(config.apiKey);
     const { error } = await resend.emails.send({
       from: `${config.fromName} <${config.fromEmail}>`,
-      to: config.toEmails,
-      subject: `New contact form message from ${payload.name}`,
+      to: config.toEmail,
+      subject: `New contact form message from ${payload.firstName} ${payload.lastName}`,
       text: buildContactEmailBody(payload),
     });
 
@@ -113,11 +119,11 @@ async function sendContactEmail(
 
 function buildContactEmailBody(payload: ContactPayload): string {
   return [
-    `Name: ${payload.name}`,
+    `Name: ${payload.firstName} ${payload.lastName}`,
+    `Email: ${payload.email}`,
     `Has website: ${payload.hasWebsite}`,
-    `Company name: ${payload.companyName}`,
-    '',
-    'Questions:',
-    payload.questions || 'No questions submitted.',
+    `Company name: ${payload.companyName}\n`,
+    'Message:',
+    payload.message || 'Empty message',
   ].join('\n');
 }
