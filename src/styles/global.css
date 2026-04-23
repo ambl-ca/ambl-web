@@ -2,11 +2,6 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #215E48;
-  --color-secondary: #E2ECCF;
-  --color-background: #F9FBF5;
-  --color-text: #181717;
-
   --color-poppy-800: #C13333;
   --color-iris-800: #1C697D;
 
@@ -14,10 +9,19 @@
   --color-tree-500: #C9DAA4;
   --color-tree-300: #DFE9C9;
   --color-tree-100: #FDFEFB;
+  --color-tree-50: #F9FBF5;
    
   --color-sun-800: #A7592C;
   --color-sun-500: #E4B59A;
   --color-sun-300: #EED3C3;
+
+  --color-primary: var(--color-tree-800);
+  --color-secondary: var(--color-tree-500);
+  --color-background: var(--color-tree-50);
+  --color-text: #181717;
+
+  --color-destructive: var(--color-poppy-800);
+  --color-ring: var(--color-primary);
 
 }
 
